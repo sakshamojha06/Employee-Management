@@ -1,0 +1,8 @@
+# Build output and restored NuGet dependencies
+bin/
+obj/
+
+# User-specific IDE files
+*.user
+*.suo
+.vs/
