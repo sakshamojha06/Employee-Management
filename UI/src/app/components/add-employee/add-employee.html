@@ -1,1 +1,169 @@
-<p>add-employee works!</p>
+<div class="container mt-5">
+
+  <div class="card shadow-sm border-0 mx-auto">
+
+    <div class="card-header bg-primary text-white py-3">
+      <h4 class="mb-0">
+        <i class="bi bi-person-plus-fill me-2"></i>
+        Employee Registration
+      </h4>
+    </div>
+
+    <div class="card-body p-4">
+
+      <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+
+        <!-- Full Name -->
+        <div class="mb-3">
+
+          <label class="form-label">Full Name</label>
+
+          <input
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Enter full name"
+            [class.is-invalid]="f['name'].touched && f['name'].invalid">
+
+          @if (f['name'].touched && f['name'].errors) {
+
+            @if (f['name'].errors['required']) {
+              <div class="invalid-feedback">
+                Full Name is required.
+              </div>
+            }
+
+            @if (f['name'].errors['minlength']) {
+              <div class="invalid-feedback">
+                Minimum 3 characters required.
+              </div>
+            }
+
+          }
+
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+
+          <label class="form-label">Email</label>
+
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="Enter email"
+            [class.is-invalid]="f['email'].touched && f['email'].invalid">
+
+          @if (f['email'].touched && f['email'].errors) {
+
+            @if (f['email'].errors['required']) {
+              <div class="invalid-feedback">
+                Email is required.
+              </div>
+            }
+
+            @if (f['email'].errors['email']) {
+              <div class="invalid-feedback">
+                Please enter a valid email.
+              </div>
+            }
+
+          }
+
+        </div>
+
+        <!-- Age -->
+        <div class="mb-3">
+
+          <label class="form-label">Age</label>
+
+          <input
+            type="number"
+            class="form-control"
+            formControlName="age"
+            placeholder="Enter age"
+            [class.is-invalid]="f['age'].touched && f['age'].invalid">
+
+          @if (f['age'].touched && f['age'].errors) {
+
+            @if (f['age'].errors['required']) {
+              <div class="invalid-feedback">
+                Age is required.
+              </div>
+            }
+
+            @if (f['age'].errors['min']) {
+              <div class="invalid-feedback">
+                Minimum age must be 18.
+              </div>
+            }
+
+            @if (f['age'].errors['max']) {
+              <div class="invalid-feedback">
+                Maximum age must be 65.
+              </div>
+            }
+
+          }
+
+        </div>
+
+        <!-- Department -->
+        <div class="mb-4">
+
+          <label class="form-label">Department</label>
+
+          <select
+            class="form-select"
+            formControlName="department"
+            [class.is-invalid]="f['department'].touched && f['department'].invalid">
+
+            <option value="">Select Department</option>
+
+            @for (department of departments; track department) {
+              <option [value]="department">
+                {{ department }}
+              </option>
+            }
+
+          </select>
+
+          @if (f['department'].touched && f['department'].invalid) {
+            <div class="invalid-feedback">
+              Please select a department.
+            </div>
+          }
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-end gap-2">
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="router.navigate(['/'])">
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="employeeForm.invalid || isSubmitting">
+
+            <i class="bi bi-save me-2"></i>
+
+            {{ isSubmitting ? 'Saving...' : 'Save Employee' }}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
