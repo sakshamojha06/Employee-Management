@@ -1,0 +1,16 @@
+.container {
+  max-width: 1100px;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.table th,
+.table td {
+  padding: 14px;
+}
+
+.btn {
+  border-radius: 6px;
+}
