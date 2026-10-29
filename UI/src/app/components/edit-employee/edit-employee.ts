@@ -1,11 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import {FormBuilder,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee';
