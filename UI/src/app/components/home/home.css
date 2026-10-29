@@ -14,3 +14,11 @@
 .btn {
   border-radius: 6px;
 }
+
+.modal {
+  z-index: 1060;
+}
+
+.modal-backdrop {
+  z-index: 1055;
+}

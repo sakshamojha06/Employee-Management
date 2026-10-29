@@ -9,6 +9,7 @@ import {
 
 import { Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee';
+import { NotificationService } from '../../services/notification';
 
 @Component({
   selector: 'app-add-employee',
@@ -21,6 +22,7 @@ export class AddEmployee {
 
   private fb = inject(FormBuilder);
   private employeeService = inject(EmployeeService);
+  private notificationService = inject(NotificationService);
   readonly router = inject(Router);
 
   isSubmitting = false;
@@ -65,13 +67,13 @@ export class AddEmployee {
     this.employeeService.addEmployee(this.employeeForm.value).subscribe({
 
       next: () => {
-        alert('Employee added successfully!');
+        this.notificationService.show('Person added successfully.', 'success');
         this.router.navigate(['/']);
       },
 
       error: (error) => {
         console.error('Error adding employee:', error);
-        alert('Unable to add employee.');
+        this.notificationService.show('Unable to add person.', 'danger');
         this.isSubmitting = false;
       }
 

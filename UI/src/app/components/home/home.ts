@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 import { EmployeeService } from '../../services/employee';
 import { Employee } from '../../models/employee';
+import { NotificationService } from '../../services/notification';
 
 @Component({
   selector: 'app-home',
@@ -15,8 +16,10 @@ import { Employee } from '../../models/employee';
 export class Home implements OnInit {
 
   private employeeService = inject(EmployeeService);
+  private notificationService = inject(NotificationService);
 
   employees = signal<Employee[]>([]);
+  pendingDeleteId = signal<number | null>(null);
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -34,20 +37,30 @@ export class Home implements OnInit {
   }
 
   deleteEmployee(id: number): void {
+    this.pendingDeleteId.set(id);
+  }
 
-    const confirmed = confirm('Are you sure you want to delete this employee?');
+  cancelDelete(): void {
+    this.pendingDeleteId.set(null);
+  }
 
-    if (!confirmed) {
+  confirmDelete(): void {
+    const id = this.pendingDeleteId();
+
+    if (id === null) {
       return;
     }
 
     this.employeeService.deleteEmployee(id).subscribe({
       next: () => {
-        alert('Employee deleted successfully!');
+        this.pendingDeleteId.set(null);
+        this.notificationService.show('Person deleted successfully.', 'success');
         this.loadEmployees();
       },
       error: (error) => {
         console.error('Error deleting employee:', error);
+        this.pendingDeleteId.set(null);
+        this.notificationService.show('Unable to delete person.', 'danger');
       }
     });
   }

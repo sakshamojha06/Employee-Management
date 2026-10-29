@@ -12,4 +12,21 @@
   </div>
 </nav>
 
+@if (notification.message()) {
+  <div
+    class="alert alert-{{ notification.type() }} alert-dismissible fade show notification-alert shadow-sm"
+    role="alert">
+    <i
+      class="bi me-2"
+      [class.bi-check-circle-fill]="notification.type() === 'success'"
+      [class.bi-exclamation-triangle-fill]="notification.type() === 'danger'"></i>
+    {{ notification.message() }}
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close notification"
+      (click)="notification.dismiss()"></button>
+  </div>
+}
+
 <router-outlet></router-outlet>

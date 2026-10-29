@@ -9,6 +9,7 @@ import {
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee';
+import { NotificationService } from '../../services/notification';
 
 @Component({
   selector: 'app-edit-employee',
@@ -21,6 +22,7 @@ export class EditEmployee implements OnInit {
 
   private fb = inject(FormBuilder);
   private employeeService = inject(EmployeeService);
+  private notificationService = inject(NotificationService);
   private route = inject(ActivatedRoute);
   private changeDetector = inject(ChangeDetectorRef);
 
@@ -86,7 +88,7 @@ export class EditEmployee implements OnInit {
       error: (error) => {
         console.error('Error loading employee:', error);
         this.isLoading = false;
-        alert('Employee not found.');
+        this.notificationService.show('Person not found.', 'danger');
         this.router.navigate(['/']);
       }
 
@@ -108,13 +110,13 @@ export class EditEmployee implements OnInit {
     ).subscribe({
 
       next: () => {
-        alert('Employee updated successfully!');
+        this.notificationService.show('Person updated successfully.', 'success');
         this.router.navigate(['/']);
       },
 
       error: (error) => {
         console.error('Error updating employee:', error);
-        alert('Unable to update employee.');
+        this.notificationService.show('Unable to update person.', 'danger');
         this.isSubmitting = false;
       }
 

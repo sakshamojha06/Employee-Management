@@ -1,0 +1,8 @@
+.notification-alert {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 1055;
+  min-width: min(24rem, calc(100vw - 2rem));
+  margin-bottom: 0;
+}
